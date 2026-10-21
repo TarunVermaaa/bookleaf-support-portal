@@ -1,0 +1,22 @@
+{
+  "name": "bookleaf-support-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BookLeaf Author Support & Communication Portal — author + admin portals with AI-assisted triage and response drafting",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace server & npm run dev --workspace web",
+    "build": "npm run build --workspace web && npm run build --workspace server",
+    "start": "npm run start --workspace server",
+    "test": "npm run test --workspace server",
+    "typecheck": "npm run typecheck --workspace server && npm run typecheck --workspace web",
+    "db:generate": "npm run db:generate --workspace server",
+    "db:seed": "npm run db:seed --workspace server"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
