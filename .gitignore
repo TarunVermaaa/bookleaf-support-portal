@@ -7,3 +7,4 @@ dist/
 # local embedded Postgres (PGlite) data directory
 server/.pglite/
 coverage/
+*.tsbuildinfo
