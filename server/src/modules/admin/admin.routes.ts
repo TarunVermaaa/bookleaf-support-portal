@@ -43,8 +43,10 @@ adminRouter.get('/stats', async (_req, res) => {
       .select({
         purpose: aiCalls.purpose,
         model: aiCalls.model,
-        calls: count(),
+        // Calls actually sent to the model; "skipped" = short-circuited (no key / circuit open) and counted separately.
+        calls: sql<number>`count(*) filter (where ${aiCalls.status} <> 'skipped')::int`,
         ok: sql<number>`count(*) filter (where ${aiCalls.status} = 'ok')::int`,
+        skipped: sql<number>`count(*) filter (where ${aiCalls.status} = 'skipped')::int`,
         inputTokens: sql<number>`coalesce(sum(${aiCalls.inputTokens}),0)::int`,
         outputTokens: sql<number>`coalesce(sum(${aiCalls.outputTokens}),0)::int`,
         cacheReadTokens: sql<number>`coalesce(sum(${aiCalls.cacheReadTokens}),0)::int`,
