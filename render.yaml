@@ -1,0 +1,33 @@
+# Render Blueprint: one web service (API + built frontend on the same origin) and a managed Postgres.
+# Deploy: Render dashboard → New → Blueprint → select this repo, then set ANTHROPIC_API_KEY when prompted.
+services:
+  - type: web
+    name: bookleaf-support-portal
+    runtime: node
+    plan: free
+    # --include=dev: the build needs TypeScript and Vite even though NODE_ENV is production
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bookleaf-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false # entered in the Render dashboard, never committed
+      - key: AI_MODEL
+        value: claude-opus-5-5
+      - key: SEED_ON_BOOT
+        value: "true"
+
+databases:
+  - name: bookleaf-db
+    plan: free
+    databaseName: bookleaf

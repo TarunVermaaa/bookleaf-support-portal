@@ -22,12 +22,19 @@ const migrationsFolder = path.resolve(here, '../../drizzle');
  */
 export type DB = NodePgDatabase<typeof schema>;
 
+// Managed providers need TLS on their public hostnames (e.g. *.render.com, *.neon.tech, or ?sslmode=require).
+// Local databases and Render's private network hostnames (no dots, e.g. "dpg-abc123-a") don't.
+function needsTls(url: string) {
+  if (/sslmode=(require|verify)/.test(url)) return true;
+  const host = new URL(url).hostname;
+  return host.includes('.') && !/^(localhost|127\.0\.0\.1)$/.test(host);
+}
+
 function createDb() {
   if (env.DATABASE_URL) {
     const pool = new pg.Pool({
       connectionString: env.DATABASE_URL,
-      // Managed Postgres providers (Render, Neon) require TLS for external connections.
-      ssl: /localhost|127\.0\.0\.1/.test(env.DATABASE_URL) ? undefined : { rejectUnauthorized: false },
+      ssl: needsTls(env.DATABASE_URL) ? { rejectUnauthorized: false } : undefined,
       max: 10,
     });
     const db = drizzlePg(pool, { schema });
