@@ -5,8 +5,8 @@ Authors see their books and royalties and raise support tickets; the support tea
 queue where every ticket is **classified and scored by AI**, and every reply starts from an **AI draft grounded in
 BookLeaf's knowledge base and the author's real book data** — which the admin reviews, edits and sends.
 
-- **Live demo:** https://bookleaf-support-portal.onrender.com
-- **API docs (Swagger UI):** https://bookleaf-support-portal.onrender.com/api/docs · raw spec: [`server/openapi.yaml`](server/openapi.yaml)
+- **Live demo:** https://bookleaf-support-portal-c89x.onrender.com
+- **API docs (Swagger UI):** https://bookleaf-support-portal-c89x.onrender.com/api/docs · raw spec: [`server/openapi.yaml`](server/openapi.yaml)
 - **Write-up:** [`docs/WRITEUP.md`](docs/WRITEUP.md)
 
 > **About the live demo and AI:** the deployed instance runs **without an LLM API key**, so it shows the
