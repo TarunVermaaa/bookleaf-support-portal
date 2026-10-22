@@ -5,9 +5,16 @@ Authors see their books and royalties and raise support tickets; the support tea
 queue where every ticket is **classified and scored by AI**, and every reply starts from an **AI draft grounded in
 BookLeaf's knowledge base and the author's real book data** — which the admin reviews, edits and sends.
 
-- **Live demo:** _<add the Render URL here after deploying>_
-- **API docs (Swagger UI):** `<live URL>/api/docs` · raw spec: [`server/openapi.yaml`](server/openapi.yaml)
+- **Live demo:** https://bookleaf-support-portal.onrender.com
+- **API docs (Swagger UI):** https://bookleaf-support-portal.onrender.com/api/docs · raw spec: [`server/openapi.yaml`](server/openapi.yaml)
 - **Write-up:** [`docs/WRITEUP.md`](docs/WRITEUP.md)
+
+> **About the live demo and AI:** the deployed instance runs **without an LLM API key**, so it shows the
+> graceful-degradation path. Tickets are classified by the keyword rules and labelled "Rules (AI offline)",
+> and the draft panel asks the admin to reply manually. To see the AI path, set `ANTHROPIC_API_KEY`
+> (locally in `.env`, or on Render as an environment variable). No code change is needed; the next ticket is
+> triaged by the model, and "Re-run AI triage" upgrades existing ones. The server is on Render's free plan,
+> so the first request after a quiet spell can take up to a minute.
 
 ## Test accounts
 
